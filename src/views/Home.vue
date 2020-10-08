@@ -2,7 +2,6 @@
   <main>
     <section>
       <h2>Welcome to stocks and bitches</h2>
-      <Company :query="symbol" :data="stock" />
 
       <div class="container">
         <input type="text" v-model="symbol" placeholder="input company symbol..." />
@@ -25,17 +24,21 @@
 </template>
 
 <script>
-  import Company from '@/components/Company';
-  import Loader from '@/components/Loader';
   import { defineComponent } from 'vue';
+  import Loader from '@/components/Loader';
 
   export default defineComponent({
     name: 'home',
     data() {
       return {
         connected: false,
-        socket: null | WebSocket,
-        stock: {},
+        socket: null,
+        stock: {
+          p: 0,
+          s: '',
+          t: 0,
+          v: 0,
+        },
         symbol: '',
         currentSymbol: '',
         isLoading: false,
@@ -43,7 +46,6 @@
       };
     },
     components: {
-      Company,
       Loader,
     },
     methods: {
@@ -78,37 +80,27 @@
       unsubscribe() {
         this.isLoading = false;
         this.infoMessage = '';
-
         const options = JSON.stringify({ type: 'unsubscribe', symbol: this.currentSymbol });
+
         try {
           this.socket.send(options);
         } catch (error) {
           this.infoMessage = error.message;
+        } finally {
+          this.socket.onclose = () => {
+            this.stock = {};
+            this.infoMessage = 'Disconnected';
+          };
         }
-        this.socket.onclose = () => {
-          this.stock = {};
-          this.infoMessage = 'Disconnected';
-        };
       },
     },
   });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
   $white: #fff;
   $black: #333;
-
-  * {
-    box-sizing: border-box;
-  }
-
-  #app {
-    font-family: 'Cutive Mono', monospace;
-    text-align: center;
-    color: #2c3e50;
-    line-height: 1.5;
-  }
 
   input {
     border-radius: 4px;
@@ -140,7 +132,7 @@
       background: $color;
 
       &:hover {
-        background: saturate($color, 20%);
+        background: desaturate($color, 20%);
       }
     }
 
@@ -157,32 +149,5 @@
   .stock {
     margin-top: 5rem;
     font-size: 5rem;
-  }
-
-  .router-link {
-    color: #719fc0;
-    text-decoration: none;
-    position: relative;
-  }
-
-  .router-link:hover {
-    &::before {
-      content: '';
-      position: absolute;
-      height: 1px;
-      background: #719fc0;
-      bottom: 0;
-      left: 0;
-      animation: width 250ms ease forwards;
-    }
-  }
-
-  @keyframes width {
-    from {
-      width: 0;
-    }
-    to {
-      width: 100%;
-    }
   }
 </style>

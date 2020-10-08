@@ -1,12 +1,11 @@
 <template>
   <section class="data" v-if="showData">
-    {{ companySymbol }}
-    <span class="price">{{ data.o }} Open price of the day </span>
-    <span class="price">{{ data.h }} High price of the day </span>
-    <span class="price">{{ data.l }} Low price of the day </span>
-    <span class="price">{{ data.pc }} Previous close price </span>
-
-    <button @click="findStock">Find</button>
+    <h2>{{ symbol }}</h2>
+    <span class="price">Open price of the day: {{ data.o }}</span>
+    <span class="price">High price of the day: {{ data.h }}</span>
+    <span class="price">Low price of the day: {{ data.l }}</span>
+    <span class="price">Previous close price: {{ data.pc }}</span>
+    <span class="price">Current price: {{ currentPrice }}</span>
   </section>
 </template>
 
@@ -14,10 +13,11 @@
   export default {
     name: 'Company',
     props: {
-      query: String,
+      currentPrice: Number,
     },
     data() {
       return {
+        symbol: this.$route.params.id.toUpperCase(),
         showData: false,
         data: {
           c: 0,
@@ -33,9 +33,8 @@
       async findStock() {
         try {
           const { VUE_APP_API, VUE_APP_TOKEN } = process.env;
-          const symbol = this.query.toUpperCase();
           const res = await fetch(
-            `${VUE_APP_API}/api/v1/quote?symbol=${symbol}&token=${VUE_APP_TOKEN}`,
+            `${VUE_APP_API}/quote?symbol=${this.symbol}&token=${VUE_APP_TOKEN}`,
           );
           this.data = await res.json();
           this.showData = true;
@@ -43,6 +42,9 @@
           throw new Error(error);
         }
       },
+    },
+    mounted() {
+      this.findStock();
     },
   };
 </script>
