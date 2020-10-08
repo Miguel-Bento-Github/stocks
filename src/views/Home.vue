@@ -2,29 +2,35 @@
   <main>
     <section>
       <h2>Welcome to stocks and bitches</h2>
-      <fetch-by-name :query="symbol" :data="stock" />
+      <Company :query="symbol" :data="stock" />
 
       <div class="container">
         <input type="text" v-model="symbol" placeholder="input company symbol..." />
-        <button class="subscribe" @click="subscribe()">Connect</button>
-        <button class="unsubscribe" @click="unsubscribe()">Disconnect</button>
+        <button class="button button-subscribe" @click="subscribe()">Connect</button>
+        <button class="button button-unsubscribe" @click="unsubscribe()">Disconnect</button>
       </div>
     </section>
+
     <section class="stock" v-if="stock.p">
-      <button class="subscribe">{{ stock.s }}</button>
+      <router-link :to="stock.s.toLowerCase()" class="router-link">{{ stock.s }}</router-link>
       <div>{{ stock.p }}</div>
     </section>
+
     <div v-if="isLoading">
-      <loader />
+      <Loader />
     </div>
+
+    <p v-if="infoMessage">{{ infoMessage }}</p>
   </main>
 </template>
 
 <script>
-  import FetchByName from '@/components/FetchByName';
+  import Company from '@/components/Company';
   import Loader from '@/components/Loader';
+  import { defineComponent } from 'vue';
 
-  export default {
+  export default defineComponent({
+    name: 'home',
     data() {
       return {
         connected: false,
@@ -33,11 +39,11 @@
         symbol: '',
         currentSymbol: '',
         isLoading: false,
-        isError: false,
+        infoMessage: '',
       };
     },
     components: {
-      FetchByName,
+      Company,
       Loader,
     },
     methods: {
@@ -48,33 +54,47 @@
 
         this.socket.onopen = () => {
           const options = JSON.stringify({ type: 'subscribe', symbol: this.currentSymbol });
-          this.socket.send(options);
+          try {
+            this.socket.send(options);
+          } catch (error) {
+            this.error = true;
+          }
         };
+
         this.socket.onmessage = ({ data }) => {
           const res = JSON.parse(data);
           if (res.data) {
             this.isLoading = false;
+            this.infoMessage = '';
             this.stock = res.data[0];
           } else if (res.type === 'error') {
             this.loading = false;
-            this.isError = true;
+            this.infoMessage = res.msg;
+          } else if (res.type === 'ping') {
+            this.infoMessage = 'Please wait, trying to connect';
           }
         };
       },
       unsubscribe() {
+        this.isLoading = false;
+        this.infoMessage = '';
+
         const options = JSON.stringify({ type: 'unsubscribe', symbol: this.currentSymbol });
-        this.socket.send(options);
+        try {
+          this.socket.send(options);
+        } catch (error) {
+          this.infoMessage = error.message;
+        }
         this.socket.onclose = () => {
           this.stock = {};
+          this.infoMessage = 'Disconnected';
         };
-        this.stock = {};
       },
     },
-  };
+  });
 </script>
 
 <style lang="scss">
-  @import url('./reset.css');
   @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap');
   $white: #fff;
   $black: #333;
@@ -107,37 +127,62 @@
     }
   }
 
-  button {
-    box-shadow: 1px -1px 2px $white, -1px 1px 2px $black;
-    border-radius: 8px;
-    padding: 1px 4px;
-    color: $white;
-    margin-left: 16px;
-  }
-
   .container {
     margin-top: 2rem;
   }
 
-  .subscribe {
-    $color: #4ba479;
-    background: $color;
+  .button {
+    color: $white;
+    margin-left: 16px;
 
-    &:hover {
-      background: saturate($color, 20%);
+    &-subscribe {
+      $color: #4ba479;
+      background: $color;
+
+      &:hover {
+        background: saturate($color, 20%);
+      }
     }
-  }
-  .unsubscribe {
-    $color: #78c461;
-    background: #78c461;
 
-    &:hover {
-      background: saturate($color, 20%);
+    &-unsubscribe {
+      $color: #78c461;
+      background: #78c461;
+
+      &:hover {
+        background: saturate($color, 20%);
+      }
     }
   }
 
   .stock {
     margin-top: 5rem;
     font-size: 5rem;
+  }
+
+  .router-link {
+    color: #719fc0;
+    text-decoration: none;
+    position: relative;
+  }
+
+  .router-link:hover {
+    &::before {
+      content: '';
+      position: absolute;
+      height: 1px;
+      background: #719fc0;
+      bottom: 0;
+      left: 0;
+      animation: width 250ms ease forwards;
+    }
+  }
+
+  @keyframes width {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
   }
 </style>

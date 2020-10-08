@@ -5,6 +5,12 @@
   </div>
 </template>
 
+<script>
+  export default {
+    name: 'loader',
+  };
+</script>
+
 <style scoped>
   .loader {
     margin-top: 4rem;
