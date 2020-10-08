@@ -10,31 +10,39 @@
         <button class="unsubscribe" @click="unsubscribe()">Disconnect</button>
       </div>
     </section>
-    <section class="stock">
+    <section class="stock" v-if="stock.p">
       <button class="subscribe">{{ stock.s }}</button>
       <div>{{ stock.p }}</div>
     </section>
+    <div v-if="isLoading">
+      <loader />
+    </div>
   </main>
 </template>
 
 <script>
   import FetchByName from './components/FetchByName';
+  import Loader from './components/Loader';
 
   export default {
     data() {
       return {
         connected: false,
-        socket: null,
-        stock: [],
+        socket: null | WebSocket,
+        stock: {},
         symbol: '',
         currentSymbol: '',
+        isLoading: false,
+        isError: false,
       };
     },
     components: {
       FetchByName,
+      Loader,
     },
     methods: {
       subscribe() {
+        this.isLoading = true;
         this.socket = new WebSocket(`wss://ws.finnhub.io?token=${process.env.VUE_APP_TOKEN}`);
         this.currentSymbol = this.symbol.toUpperCase();
 
@@ -44,12 +52,22 @@
         };
         this.socket.onmessage = ({ data }) => {
           const res = JSON.parse(data);
-          this.stock = res.data[0];
+          if (res.data) {
+            this.isLoading = false;
+            this.stock = res.data[0];
+          } else if (res.type === 'error') {
+            this.loading = false;
+            this.isError = true;
+          }
         };
       },
       unsubscribe() {
         const options = JSON.stringify({ type: 'unsubscribe', symbol: this.currentSymbol });
         this.socket.send(options);
+        this.socket.onclose = () => {
+          this.stock = {};
+        };
+        this.stock = {};
       },
     },
   };
