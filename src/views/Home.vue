@@ -1,7 +1,7 @@
 <template>
   <main>
     <section>
-      <h2>Wall Street Live</h2>
+      <h2>Live data</h2>
 
       <form class="container" @submit.prevent>
         <input
@@ -42,7 +42,6 @@ import { defineComponent } from "vue";
 import Loader from "@/components/Loader.vue";
 import Graph from "@/components/Graph.vue";
 import store from "../store";
-// eslint-disable-next-line no-unused-vars
 import { ChartData, LiveStock } from "../types";
 
 export default defineComponent({

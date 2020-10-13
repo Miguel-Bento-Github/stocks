@@ -8,8 +8,6 @@
 
 <script lang="ts">
 import Chart from "chart.js";
-// ESLint is currently not working properly with vue and ts
-// eslint-disable-next-line no-unused-vars
 import { ChartData } from "../types";
 import { defineComponent } from "vue";
 
@@ -38,24 +36,32 @@ export default defineComponent({
     /**
      * Chart.js doc can be found here
      * {@link https://www.chartjs.org/docs/latest/}
+     *
+     * Due to the size of the chart configuration this documentation will be inside the function.
      */
     drawChart(): void {
+      /**
+       * Similar to a getElementById but in a vuesque way of writing. More info here
+       * {@link https://vuejs.org/v2/guide/components-edge-cases.html#Accessing-Child-Component-Instances-amp-Child-Elements}
+       */
       const context: CanvasRenderingContext2D = this.$refs.chart.getContext(
         "2d"
       );
-      const colourList = [
-        "rgba(182, 203, 158, 0.5)",
-        "rgba(247, 80, 38, 0.5)",
-        "rgba(55, 61, 32, 0.5)",
-        "rgba(82, 72, 156, 0.5)",
-      ];
-      const colours: string[] = ["rgba(82, 72, 156, 0.2)"];
+      const colors: string[] = ["rgba(82, 72, 156, 0.2)"];
+
+      /**
+       * Will fill the colors array with any random colour from the list
+       */
       if (this.chartData.type !== "line") {
-        colours.pop();
+        const colorList = [
+          "rgba(182, 203, 158, 0.5)",
+          "rgba(247, 80, 38, 0.5)",
+          "rgba(55, 61, 32, 0.5)",
+          "rgba(82, 72, 156, 0.5)",
+        ];
+        colors.pop();
         for (let i = 0; i < this.chartData.data.length; i++) {
-          colours.push(
-            colourList[Math.floor(Math.random() * colourList.length)]
-          );
+          colors.push(colorList[Math.floor(Math.random() * colorList.length)]);
         }
       }
 
@@ -67,12 +73,13 @@ export default defineComponent({
             {
               label: this.chartData.label,
               data: this.chartData.data,
-              backgroundColor: colours,
-              borderColor: colours,
+              backgroundColor: colors,
+              borderColor: colors,
               borderWidth: 0.5,
               pointStyle: "circle",
               spanGaps: true,
               pointRadius: 2,
+              pointHitRadius: 100000,
               pointHoverRadius: 5,
             },
           ],
