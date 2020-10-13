@@ -13,17 +13,5 @@
   ],
   "parserOptions": {
     "parser": "@typescript-eslint/parser"
-  },
-  "rules": {
-    "vue/max-attributes-per-line": [
-      "error",
-      {
-        "singleline": 4,
-        "multiline": {
-          "max": 4,
-          "allowFirstLine": false
-        }
-      }
-    ]
   }
 }
