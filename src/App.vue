@@ -16,7 +16,7 @@ export default {};
 <style lang="scss">
 #app {
   font-family: "Cutive Mono", monospace;
-  color: #2c3e50;
+  color: $dark;
   line-height: 1.5;
 }
 
@@ -25,29 +25,44 @@ export default {};
 }
 
 .nav {
-  background: #2c3e50;
+  background: $dark;
   padding: 0.25rem 2rem;
 }
 
 .router-link {
-  color: #a3c0d4;
+  color: $light;
   text-decoration: none;
   position: relative;
+  padding: 0.25rem 1rem;
 
   &::before {
     content: "";
     position: absolute;
     width: 100%;
-    height: 2px;
-    bottom: -2px;
+    top: 0;
     left: 0;
-    background-color: #a3c0d4;
-    transform: scaleX(0);
-    transition: all 0.3s ease-in-out 0s;
+    height: 2px;
+    background-color: $light;
+    transition: all 250ms ease-in-out 50ms;
   }
 
   &:hover::before {
-    transform: scaleX(1);
+    top: 100%;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: 0;
+    left: 0;
+    top: 0;
+    width: 2px;
+    background-color: $light;
+    transition: all 250ms ease-in-out 50ms;
+  }
+
+  &:hover::after {
+    height: 100%;
   }
 }
 </style>

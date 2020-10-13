@@ -169,8 +169,6 @@ interface State {
 
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
-$white: #fff;
-$black: #333;
 
 input {
   border-radius: 4px;
