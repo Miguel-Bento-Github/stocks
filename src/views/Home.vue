@@ -4,17 +4,9 @@
       <h2>Live data</h2>
 
       <form class="container" @submit.prevent>
-        <input
-          v-model="ticker"
-          type="text"
-          placeholder="input company ticker..."
-        />
-        <button class="button button-subscribe" @click="subscribe()">
-          Connect
-        </button>
-        <button class="button button-unsubscribe" @click="unsubscribe()">
-          Disconnect
-        </button>
+        <input v-model="ticker" type="text" placeholder="input company ticker..." />
+        <button class="button button-subscribe" @click="subscribe()">Connect</button>
+        <button class="button button-unsubscribe" @click="unsubscribe()">Disconnect</button>
       </form>
     </section>
 

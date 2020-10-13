@@ -44,21 +44,14 @@ export default defineComponent({
        * Similar to a getElementById but in a vuesque way of writing. More info here
        * {@link https://vuejs.org/v2/guide/components-edge-cases.html#Accessing-Child-Component-Instances-amp-Child-Elements}
        */
-      const context: CanvasRenderingContext2D = this.$refs.chart.getContext(
-        "2d"
-      );
+      const context: CanvasRenderingContext2D = this.$refs.chart.getContext("2d");
       const colors: string[] = ["rgba(82, 72, 156, 0.2)"];
 
       /**
        * Will fill the colors array with any random colour from the list
        */
       if (this.chartData.type !== "line") {
-        const colorList = [
-          "rgba(182, 203, 158, 0.5)",
-          "rgba(247, 80, 38, 0.5)",
-          "rgba(55, 61, 32, 0.5)",
-          "rgba(82, 72, 156, 0.5)",
-        ];
+        const colorList = ["rgba(182, 203, 158, 0.5)", "rgba(247, 80, 38, 0.5)", "rgba(55, 61, 32, 0.5)", "rgba(82, 72, 156, 0.5)"];
         colors.pop();
         for (let i = 0; i < this.chartData.data.length; i++) {
           colors.push(colorList[Math.floor(Math.random() * colorList.length)]);
@@ -101,7 +94,7 @@ export default defineComponent({
               },
             ],
           },
-          aspectRatio: 3,
+          aspectRatio: window.matchMedia("(max-width: 450px)").matches ? 1 : 2,
           legend: {
             display: false,
             labels: {

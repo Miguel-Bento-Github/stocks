@@ -3,11 +3,7 @@
     <section class="data">
       <div class="company-container">
         <h2>
-          <a
-            class="router-link"
-            :aria-label="company.name"
-            :href="company.weburl"
-          >
+          <a class="router-link" :aria-label="company.name" :href="company.weburl">
             {{ company.name }}
           </a>
         </h2>
@@ -79,9 +75,7 @@ export default {
       try {
         const { VUE_APP_API, VUE_APP_TOKEN } = process.env;
 
-        const res = await fetch(
-          `${VUE_APP_API}/quote?symbol=${this.symbol}&token=${VUE_APP_TOKEN}`
-        );
+        const res = await fetch(`${VUE_APP_API}/quote?symbol=${this.symbol}&token=${VUE_APP_TOKEN}`);
         this.data = await res.json();
       } catch (error) {
         throw new Error(error);
@@ -91,9 +85,7 @@ export default {
       const { VUE_APP_API, VUE_APP_TOKEN } = process.env;
 
       try {
-        const res = await fetch(
-          `${VUE_APP_API}/stock/profile2?symbol=${this.symbol}&token=${VUE_APP_TOKEN}`
-        );
+        const res = await fetch(`${VUE_APP_API}/stock/profile2?symbol=${this.symbol}&token=${VUE_APP_TOKEN}`);
         this.company = await res.json();
       } catch (error) {
         throw new Error(error);
@@ -101,9 +93,7 @@ export default {
     },
     async findFinancials(): Promise<void> {
       const { VUE_APP_API, VUE_APP_TOKEN } = process.env;
-      const res = await fetch(
-        `${VUE_APP_API}/stock/metric?symbol=${this.symbol}&metric=all&token=${VUE_APP_TOKEN}`
-      );
+      const res = await fetch(`${VUE_APP_API}/stock/metric?symbol=${this.symbol}&metric=all&token=${VUE_APP_TOKEN}`);
       this.financials = await res.json();
     },
     advancedChartData(statistic: string): ChartData | null {
@@ -114,8 +104,7 @@ export default {
         data: [],
       };
 
-      const statistics: [{ period: string; v: number }] | null =
-        this.financials.series.annual[statistic] || null;
+      const statistics: [{ period: string; v: number }] | null = this.financials.series.annual[statistic] || null;
 
       if (!statistics) return null;
 
