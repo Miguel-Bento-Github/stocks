@@ -14,30 +14,28 @@
           {{ normaliseCasing(attribute) }}
         </button>
       </nav>
-      <div class="navigator-hitpoints">
-        <button class="navigator-select" @click="showMenu = !showMenu"></button>
-      </div>
+      <button :class="{ 'menu-selector-hide': showMenu }" class="menu-selector" @click="showMenu = !showMenu"></button>
     </aside>
-
     <section class="data">
-      <div class="company-container">
-        <h2>
-          <a class="router-link" :aria-label="company.name" :href="company.weburl">
-            {{ company.name }}
-          </a>
-        </h2>
-        <img v-if="company.logo" class="img" :src="company.logo" />
-      </div>
+      <header class="company-container">
+        <a :aria-label="company.name" target="_blank" rel="noopener" :href="company.weburl">
+          <h2>
+            <span class="router-link">
+              {{ company.name }}
+            </span>
+          </h2>
+          <img v-if="company.logo" class="img" :src="company.logo" />
+        </a>
+      </header>
       <Graph v-if="canRender" :chart-data="basicChartData" />
     </section>
-
     <div v-if="canRender">
-      <div v-for="attribute in attributes" :id="attribute" :key="attribute">
-        <span class="attribute">
+      <section v-for="attribute in attributes" :id="attribute" :key="attribute">
+        <h3 class="attribute">
           {{ normaliseCasing(attribute) }}
-        </span>
+        </h3>
         <Graph :chart-data="advancedChartData(attribute)" />
-      </div>
+      </section>
     </div>
   </div>
 </template>
@@ -149,11 +147,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.line {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  top: 0;
+  left: 0;
+  background: $light;
+  transition: transform 250ms ease-in-out;
+}
+
 .navigator {
   background: $dark;
   color: $ivory;
   text-align: left;
   padding: 1rem;
+}
+
+.navigator-hitpoints {
+  cursor: pointer;
+  width: min-content;
 }
 
 .navigator-link {
@@ -166,40 +180,42 @@ export default {
   }
 }
 
-.line {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  top: 0;
-  left: 0;
-  background: $black;
-}
-
-.navigator-select {
+.menu-selector {
   all: unset;
-  position: relative;
-  background: $black;
-  height: 2px;
+  margin: 1rem;
+  position: fixed;
+  top: 8px;
+  right: 8px;
+  height: 24px;
   width: 32px;
+  cursor: pointer;
 
   &::before {
     @extend .line;
-    transform: translateY(-8px);
+    transform: translateY(4px);
   }
 
   &::after {
     @extend .line;
-    transform: translateY(8px);
+    transform: translateY(-4px);
   }
 
-  &:hover {
-    background: #3b5269;
+  &:hover::before {
+    transform: translateY(-4px);
+  }
+
+  &:hover::after {
+    transform: translateY(4px);
+  }
+
+  &-hide::after {
+    display: none;
   }
 }
 
 .company-container {
-  background: linear-gradient(#2c3e50 50%, $ivory 50%);
+  background: linear-gradient($dark 50%, $white 50%);
+  padding: 1rem;
 }
 
 .price {
