@@ -1,3 +1,5 @@
+import { Financials } from "./components/financial.types";
+
 export interface Stock {
   c: number;
   h: number;
@@ -30,10 +32,11 @@ export interface Company {
 }
 
 export interface CompanyState {
+  showMenu: boolean;
   symbol: string;
-  data: null | Data;
+  data: null | LiveStock;
   company: null | Company;
-  financials: null | object;
+  financials: null | Financials;
 }
 
 export interface ChartData {
