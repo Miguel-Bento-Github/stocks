@@ -1,35 +1,53 @@
 <template>
   <main>
-    <router-link to="/">Home</router-link>
-    <router-view />
+    <nav class="nav">
+      <transition name="underline">
+        <router-link class="router-link" to="/"> Home </router-link>
+      </transition>
+    </nav>
+    <router-view class="view" />
   </main>
 </template>
 
+<script lang="ts">
+export default {};
+</script>
+
 <style lang="scss">
-  @import url('./styles/keyframes.css');
+#app {
+  font-family: "Cutive Mono", monospace;
+  color: #2c3e50;
+  line-height: 1.5;
+}
 
-  #app {
-    font-family: 'Cutive Mono', monospace;
-    text-align: center;
-    color: #2c3e50;
-    line-height: 1.5;
+.view {
+  text-align: center;
+}
+
+.nav {
+  background: #2c3e50;
+  padding: 0.25rem 2rem;
+}
+
+.router-link {
+  color: #a3c0d4;
+  text-decoration: none;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #a3c0d4;
+    transform: scaleX(0);
+    transition: all 0.3s ease-in-out 0s;
   }
 
-  .router-link {
-    color: #719fc0;
-    text-decoration: none;
-    position: relative;
+  &:hover::before {
+    transform: scaleX(1);
   }
-
-  .router-link:hover {
-    &::before {
-      content: '';
-      position: absolute;
-      height: 1px;
-      background: #719fc0;
-      bottom: 0;
-      left: 0;
-      animation: width 250ms ease forwards;
-    }
-  }
+}
 </style>

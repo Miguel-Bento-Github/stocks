@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-import { Stock } from "../types";
+import { LiveStock } from "@/types";
 
 const state: State = {
   stock: {
@@ -15,16 +15,21 @@ const state: State = {
 const store = createStore({
   state,
   getters: {
-    time: (state) => state.time,
-    price: (state) => state.price,
+    time: (state): string[] => state.time,
+    price: (state): number[] => state.price,
   },
   mutations: {
-    setStock(state, stock: Stock) {
+    setStock(state, stock: LiveStock): void {
+      const toTwoDigits = (number: number): string | number =>
+        number > 9 ? number : "0" + number;
       state.stock = stock;
 
-      const date = new Date(stock.t * 1000);
-      const minutes = date.getMinutes();
-      const time = `${date.getHours()}:${minutes > 9 ? minutes : "0" + minutes}:${date.getSeconds()}`;
+      const date = new Date();
+      const hours = date.getHours();
+      const minutes = toTwoDigits(date.getMinutes());
+      const seconds = toTwoDigits(date.getSeconds());
+
+      const time = `${hours}:${minutes}:${seconds}`;
       const price = stock.p;
 
       if (state.time.includes(time)) return;
@@ -33,7 +38,7 @@ const store = createStore({
     },
   },
   actions: {
-    setStock: (context, stock: Stock) => {
+    setStock: (context, stock: LiveStock): void => {
       context.commit("setStock", stock);
     },
   },
@@ -41,7 +46,7 @@ const store = createStore({
 });
 
 interface State {
-  stock: Stock;
+  stock: LiveStock;
   time: string[];
   price: number[];
 }
