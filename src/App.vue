@@ -26,7 +26,8 @@ export default {};
 
 .nav {
   background: $dark;
-  padding: 0.25rem 2rem;
+  padding: 1rem 2rem;
+  filter: drop-shadow(0 2px 4px $dark);
 }
 
 .router-link {
