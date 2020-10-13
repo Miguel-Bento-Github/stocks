@@ -73,7 +73,7 @@ export default defineComponent({
               spanGaps: true,
               pointRadius: 2,
               pointHitRadius: 100000,
-              pointHoverRadius: 5,
+              pointHoverRadius: 2,
             },
           ],
         },
@@ -94,7 +94,7 @@ export default defineComponent({
               },
             ],
           },
-          aspectRatio: window.matchMedia("(max-width: 450px)").matches ? 1 : 2,
+          aspectRatio: window.matchMedia("(max-width: 450px)").matches ? 1 : 3,
           legend: {
             display: false,
             labels: {
