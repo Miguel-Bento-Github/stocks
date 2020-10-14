@@ -38,7 +38,7 @@ export default defineComponent({
     this.drawChart();
   },
   updated() {
-    this.drawChart();
+    // TODO Update charts
   },
   methods: {
     /**

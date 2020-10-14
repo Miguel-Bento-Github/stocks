@@ -1,15 +1,10 @@
 <template>
   <main>
     <section class="welcome">
-      <h2 class="form-title">Advanced Stocks</h2>
+      <h2 class="app-title">Advanced Stocks</h2>
       <img class="logo" src="@/assets/lucky.png" alt="logo" />
-      <form class="form-container" @submit.prevent>
-        <input v-model="ticker" class="input" type="text" placeholder="input ticker here..." />
-        <button class="button button-subscribe" @click="subscribe()">Connect</button>
-        <button class="button button-unsubscribe" @click="unsubscribe()">Disconnect</button>
-      </form>
     </section>
-
+    <Search @subscribe="subscribe" @unsubscribe="unsubscribe" />
     <section v-if="showStock" class="company-container">
       <router-link :to="stock.s.toLowerCase()" class="router-link ticker">
         {{ stock.s }}
@@ -31,6 +26,7 @@
 import { defineComponent } from "vue";
 import Loader from "@/components/Loader.vue";
 import Graph from "@/components/Graph.vue";
+import Search from "@/components/Search.vue";
 import store from "../store";
 import { ChartData, LiveStock } from "@/types/main";
 
@@ -49,6 +45,7 @@ export default defineComponent({
   components: {
     Loader,
     Graph,
+    Search,
   },
   data(): State {
     return {
@@ -96,10 +93,10 @@ export default defineComponent({
      *    in case the response @const res.type is ping or error,
      *    handle infoMessage, loader and element visibility
      */
-    subscribe(): void {
+    subscribe(ticker: string): void {
       this.infoMessage = "";
       this.isLoading = true;
-      this.currentTicker = this.ticker.toUpperCase();
+      this.currentTicker = ticker.toUpperCase();
       this.socket = new WebSocket(process.env.VUE_APP_SOCKET);
 
       this.socket.onopen = (): void => {
@@ -168,63 +165,17 @@ export default defineComponent({
   background: linear-gradient($dark 50%, $white 50%);
 }
 
+.app-title {
+  color: $white;
+}
+
 .logo {
   background: $white;
   border-radius: 50%;
   margin-top: 2rem;
-  width: 250px;
+  width: 200px;
   padding: 2rem;
   box-shadow: 3px 2px 6px $light, -3px -3px 6px $dark;
-}
-
-.input {
-  border-radius: 4px;
-  border: none;
-  box-shadow: 1px 1px 3px $light, -1px -1px 3px $dark;
-  outline: thin;
-  padding: 2px 4px;
-
-  &::placeholder {
-    color: darken($white, 40%);
-  }
-
-  @media screen and (max-width: 500px) {
-    display: block;
-    margin: 1rem auto;
-  }
-}
-
-.form {
-  &-container {
-    margin-top: 2rem;
-  }
-
-  &-title {
-    color: $white;
-  }
-}
-
-.button {
-  color: $white;
-  margin-left: 16px;
-
-  &-subscribe {
-    $color: #4ba479;
-    background: $color;
-
-    &:hover {
-      background: desaturate($color, 20%);
-    }
-  }
-
-  &-unsubscribe {
-    $color: #78c461;
-    background: $color;
-
-    &:hover {
-      background: saturate($color, 20%);
-    }
-  }
 }
 
 .company-container {
@@ -236,6 +187,6 @@ export default defineComponent({
 }
 
 .ticker {
-  @extend .stock;
+  font-size: 5rem;
 }
 </style>
