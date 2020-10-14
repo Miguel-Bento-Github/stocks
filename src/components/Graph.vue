@@ -84,6 +84,9 @@ export default defineComponent({
                 gridLines: {
                   display: false,
                 },
+                ticks: {
+                  fontFamily: "Cutive Mono",
+                },
               },
             ],
             yAxes: [
@@ -91,15 +94,15 @@ export default defineComponent({
                 gridLines: {
                   lineWidth: 0.3,
                 },
+                ticks: {
+                  fontFamily: "Cutive Mono",
+                },
               },
             ],
           },
           aspectRatio: window.matchMedia("(max-width: 450px)").matches ? 1 : 3,
           legend: {
             display: false,
-            labels: {
-              fontFamily: "Avenir",
-            },
           },
         },
       });

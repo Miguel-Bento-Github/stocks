@@ -14,6 +14,8 @@ export default {};
 </script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
+
 #app {
   font-family: "Cutive Mono", monospace;
   color: $dark;
@@ -21,12 +23,16 @@ export default {};
 }
 
 .view {
+  margin-top: 48px;
   text-align: center;
 }
 
 .nav {
+  top: 0;
+  width: 100%;
+  position: fixed;
   background: $dark;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 1rem;
   filter: drop-shadow(0 2px 4px $dark);
 }
 

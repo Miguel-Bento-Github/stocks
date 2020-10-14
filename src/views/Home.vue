@@ -168,8 +168,6 @@ interface State {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
-
 input {
   border-radius: 4px;
   border: none;
