@@ -26,6 +26,7 @@ import Menu from "../components/Menu.vue";
 import { LiveStock, Company, ChartData } from "../types/main";
 import { Financials, Annual } from "../types/financial.types";
 import normaliseCasing from "../util/normaliseCasing";
+import router from "../router";
 
 export default {
   name: "Company",
@@ -40,6 +41,7 @@ export default {
       data: null,
       company: null,
       financials: null,
+      attributes: "",
     };
   },
   computed: {
@@ -47,7 +49,7 @@ export default {
       return store.state.stock.p;
     },
     canRender(): boolean {
-      return Boolean(this.data && this.company && this.financials);
+      return Boolean(this.data && this.company && this.financials && this.attributes);
     },
     basicChartData(): ChartData {
       return {
@@ -56,15 +58,23 @@ export default {
         data: [this.data.h, this.data.o, this.data.l, this.data.pc],
       };
     },
-    attributes(): string[] | void {
-      // if (!this.financials.series.annual) {
-      //   this.$router.push("/");
-      // }
-      return Object.keys(this.financials.series.annual);
-    },
     /**
      * Transform camelCased financial annual keys into readable user friendly text
      */
+  },
+  watch: {
+    financials: {
+      /**
+       * If no reports can be found the user will be redirected to the homepage
+       */
+      handler(report: Financials) {
+        if (report.series.annual) {
+          this.attributes = Object.keys(this.financials.series.annual);
+        } else {
+          router.push("/");
+        }
+      },
+    },
   },
   mounted(): void {
     this.symbol = this.$route.params.id.toUpperCase();
@@ -129,9 +139,10 @@ export default {
 export interface CompanyState {
   attribute: string;
   symbol: string;
-  data: null | LiveStock;
-  company: null | Company;
-  financials: null | Financials;
+  data: LiveStock | null;
+  company: Company | null;
+  financials: Financials | null;
+  attributes: string | null;
 }
 </script>
 
