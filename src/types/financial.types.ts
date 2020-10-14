@@ -157,7 +157,7 @@ export interface Financials {
   symbol: string;
 }
 
-interface Annual {
+export interface Annual {
   period: string;
   v: number;
 }

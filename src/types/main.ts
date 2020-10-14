@@ -1,5 +1,3 @@
-import { Financials } from "./components/financial.types";
-
 export interface Stock {
   c: number;
   h: number;
@@ -29,14 +27,6 @@ export interface Company {
   shareOutstanding: number;
   ticker: string;
   weburl: string;
-}
-
-export interface CompanyState {
-  attribute: string;
-  symbol: string;
-  data: null | LiveStock;
-  company: null | Company;
-  financials: null | Financials;
 }
 
 export interface ChartData {

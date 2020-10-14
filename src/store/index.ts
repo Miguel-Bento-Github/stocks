@@ -1,7 +1,7 @@
 import { createStore } from "vuex";
-import { LiveStock } from "@/types";
+import { LiveStock } from "@/types/main";
 
-const state: State = {
+const state: Store = {
   stock: {
     p: 0,
     s: "",
@@ -20,8 +20,7 @@ const store = createStore({
   },
   mutations: {
     setStock(state, stock: LiveStock): void {
-      const toTwoDigits = (number: number): string | number =>
-        number > 9 ? number : "0" + number;
+      const toTwoDigits = (number: number): string | number => (number > 9 ? number : "0" + number);
       state.stock = stock;
 
       const date = new Date();
@@ -45,7 +44,7 @@ const store = createStore({
   plugins: [],
 });
 
-interface State {
+interface Store {
   stock: LiveStock;
   time: string[];
   price: number[];
