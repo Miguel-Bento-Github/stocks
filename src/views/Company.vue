@@ -1,48 +1,28 @@
 <template>
   <div v-if="canRender">
-    <aside class="navigator">
-      <nav v-if="showMenu" class="navigator-list">
-        <button
-          v-for="attribute in attributes"
-          :key="attribute"
-          class="router-link navigator-link"
-          @click="
-            scrollTo(attribute);
-            showMenu = false;
-          "
-        >
-          {{ normaliseCasing(attribute) }}
-        </button>
-      </nav>
-      <button :class="{ 'menu-selector-hide': showMenu }" class="menu-selector" @click="showMenu = !showMenu"></button>
-    </aside>
+    <Menu @attribute-selected="selectAttribute" :attributes="attributes" />
     <section class="data">
       <header class="company-container">
+        <a :aria-label="company.name" class="router-link company-link" target="_blank" rel="noopener" :href="company.weburl">
+          <span>{{ company.name }}</span>
+        </a>
         <a :aria-label="company.name" target="_blank" rel="noopener" :href="company.weburl">
-          <h2>
-            <span class="router-link">
-              {{ company.name }}
-            </span>
-          </h2>
           <img v-if="company.logo" class="img" :src="company.logo" />
         </a>
       </header>
-      <Graph v-if="canRender" :chart-data="basicChartData" />
+      <Graph v-if="!attribute && canRender" :chart-data="basicChartData" />
     </section>
-    <div v-if="canRender">
-      <section v-for="attribute in attributes" :id="attribute" :key="attribute">
-        <h3 class="attribute">
-          {{ normaliseCasing(attribute) }}
-        </h3>
-        <Graph :chart-data="advancedChartData(attribute)" />
-      </section>
+    <div v-if="attribute && canRender">
+      <h2>{{ normaliseCasing(attribute) }}</h2>
+      <Graph :chart-data="advancedChartData(attribute)" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import store from "../store";
-import Graph from "./Graph.vue";
+import store from "@/store";
+import Graph from "@/components/Graph.vue";
+import Menu from "@/components/Menu.vue";
 import { CompanyState, ChartData } from "../types";
 import normaliseCasing from "@/util/normaliseCasing";
 
@@ -50,10 +30,11 @@ export default {
   name: "Company",
   components: {
     Graph,
+    Menu,
   },
   data(): CompanyState {
     return {
-      showMenu: false,
+      attribute: "",
       symbol: "",
       data: null,
       company: null,
@@ -119,6 +100,9 @@ export default {
         throw new Error(error);
       }
     },
+    selectAttribute(attribute: string) {
+      this.attribute = attribute;
+    },
     advancedChartData(statistic: string): ChartData | null {
       const chartDataSchema: ChartData = {
         label: statistic,
@@ -138,84 +122,21 @@ export default {
 
       return chartDataSchema;
     },
-    scrollTo(location: string): void {
-      document?.getElementById(location)?.scrollIntoView();
-    },
     normaliseCasing,
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.line {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  top: 0;
-  left: 0;
-  background: $light;
-  transition: transform 250ms ease-in-out;
-}
-
-.navigator {
-  background: $dark;
-  color: $ivory;
-  text-align: left;
-  padding: 1rem;
-}
-
-.navigator-hitpoints {
-  cursor: pointer;
-  width: min-content;
-}
-
-.navigator-link {
-  display: block;
-  box-shadow: none;
-  margin: 1rem 0;
-
-  &::before {
-    width: 0;
-  }
-}
-
-.menu-selector {
-  all: unset;
-  margin: 1rem;
-  position: fixed;
-  top: 8px;
-  right: 8px;
-  height: 24px;
-  width: 32px;
-  cursor: pointer;
-
-  &::before {
-    @extend .line;
-    transform: translateY(4px);
-  }
-
-  &::after {
-    @extend .line;
-    transform: translateY(-4px);
-  }
-
-  &:hover::before {
-    transform: translateY(-4px);
-  }
-
-  &:hover::after {
-    transform: translateY(4px);
-  }
-
-  &-hide::after {
-    display: none;
-  }
-}
-
 .company-container {
   background: linear-gradient($dark 50%, $white 50%);
   padding: 1rem;
+}
+
+.company-link {
+  display: block;
+  width: max-content;
+  margin: 0 auto;
 }
 
 .price {
