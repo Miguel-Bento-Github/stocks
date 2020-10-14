@@ -17,13 +17,13 @@ export default {};
 @import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
 
 #app {
-  font-family: "Cutive Mono", monospace;
+  font-family: "Cutive Mono", "Avenir", "Arial," monospace;
   color: $dark;
   line-height: 1.5;
 }
 
 .view {
-  margin-top: 48px;
+  margin-top: 4rem;
   text-align: center;
 }
 
