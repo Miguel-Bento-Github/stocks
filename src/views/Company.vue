@@ -9,12 +9,13 @@
         <a :aria-label="company.name" target="_blank" rel="noopener" :href="company.weburl">
           <img v-if="company.logo" class="img" :src="company.logo" />
         </a>
+        <p>{{ currentPrice || data.c }} {{ company.currency }}</p>
       </header>
       <Graph v-if="!attribute && canRender" :chart-data="basicChartData" />
     </section>
     <div v-if="attribute && canRender">
       <h2>{{ normaliseCasing(attribute) }}</h2>
-      <Graph :chart-data="advancedChartData(attribute)" />
+      <Graph :chart-data="advancedChartData" />
     </div>
   </div>
 </template>
@@ -36,27 +37,45 @@ export default {
   },
   data(): CompanyState {
     return {
+      attributes: null,
       attribute: "",
       symbol: "",
       data: null,
       company: null,
       financials: null,
-      attributes: "",
     };
   },
   computed: {
-    currentPrice(): number {
-      return store.state.stock.p;
-    },
     canRender(): boolean {
       return Boolean(this.data && this.company && this.financials && this.attributes);
     },
+    currentPrice(): number {
+      return store.state.stock.p;
+    },
     basicChartData(): ChartData {
       return {
-        labels: ["High price", "Open price", "Low price", "Previous close"],
+        labels: ["Low price", "High price", "Previous close", "Open price"],
         label: this.company.name,
-        data: [this.data.h, this.data.o, this.data.l, this.data.pc],
+        data: [this.data.l, this.data.h, this.data.pc, this.data.o],
       };
+    },
+    advancedChartData(): ChartData | null {
+      const statistics: Annual[] | null = this.financials?.series?.annual[this.attribute] || null;
+      if (!statistics) return null;
+
+      const chartDataSchema: ChartData = {
+        label: this.attribute,
+        type: "line",
+        labels: [],
+        data: [],
+      };
+
+      statistics.forEach((att: Annual): void => {
+        chartDataSchema.labels.unshift(att.period);
+        chartDataSchema.data.unshift(att.v);
+      });
+
+      return chartDataSchema;
     },
     /**
      * Transform camelCased financial annual keys into readable user friendly text
@@ -67,7 +86,7 @@ export default {
       /**
        * If no reports can be found the user will be redirected to the homepage
        */
-      handler(report: Financials) {
+      handler(report: Financials): void {
         if (report.series.annual) {
           this.attributes = Object.keys(this.financials.series.annual);
         } else {
@@ -114,24 +133,7 @@ export default {
     selectAttribute(attribute: string): void {
       this.attribute = attribute;
     },
-    advancedChartData(statistic: string): ChartData | null {
-      const statistics: Annual[] | null = this.financials.series.annual[statistic] || null;
-      if (!statistics) return null;
 
-      const chartDataSchema: ChartData = {
-        label: statistic,
-        type: "line",
-        labels: [],
-        data: [],
-      };
-
-      statistics.forEach((att: Annual): void => {
-        chartDataSchema.labels.unshift(att.period);
-        chartDataSchema.data.unshift(att.v);
-      });
-
-      return chartDataSchema;
-    },
     normaliseCasing,
   },
 };
@@ -142,7 +144,7 @@ export interface CompanyState {
   data: LiveStock | null;
   company: Company | null;
   financials: Financials | null;
-  attributes: string | null;
+  attributes: string[] | null;
 }
 </script>
 

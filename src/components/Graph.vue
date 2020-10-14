@@ -13,6 +13,7 @@ export default defineComponent({
   name: "Graph",
   props: {
     chartData: { required: true, type: Object as () => ChartData },
+    realTime: { required: false, type: Boolean, default: true },
   },
   data(): { chart: Chart | null } {
     return {
@@ -22,12 +23,20 @@ export default defineComponent({
   watch: {
     chartData: {
       deep: true,
+      /**
+       * this will trigger a new render with live data
+       */
       handler(): void {
-        this.chart.update();
+        if (this.realTime) {
+          this.chart.update();
+        }
       },
     },
   },
   mounted() {
+    this.drawChart();
+  },
+  updated() {
     this.drawChart();
   },
   methods: {
@@ -43,16 +52,25 @@ export default defineComponent({
        * {@link https://vuejs.org/v2/guide/components-edge-cases.html#Accessing-Child-Component-Instances-amp-Child-Elements}
        */
       const context: CanvasRenderingContext2D = this.$refs.chart.getContext("2d");
-      const colors: string[] = ["rgba(82, 72, 156, 0.2)"];
+      const colors: Set<string> = new Set(["rgba(82, 72, 156, 0.2)"]);
 
       /**
        * Will fill the colors array with any random colour from the list
        */
       if (this.chartData.type !== "line") {
-        const colorList = ["rgba(182, 203, 158, 0.5)", "rgba(247, 80, 38, 0.5)", "rgba(55, 61, 32, 0.5)", "rgba(82, 72, 156, 0.5)"];
-        colors.pop();
+        const colorList = [
+          "rgba(182, 203, 158, 0.2)",
+          "rgba(247, 80, 38, 0.2)",
+          "rgba(55, 61, 32, 0.2)",
+          "rgba(82, 72, 156, 0.2)",
+          "rgba(162, 215, 41, 0.2)",
+          "rgba(250, 178, 234, 0.2)",
+          "rgba(223, 239, 202, 0.2)",
+          "rgba(61, 81, 140, 0.2)",
+        ];
+        colors.clear();
         for (let i = 0; i < this.chartData.data.length; i++) {
-          colors.push(colorList[Math.floor(Math.random() * colorList.length)]);
+          colors.add(colorList[Math.floor(Math.random() * colorList.length)]);
         }
       }
 
@@ -64,14 +82,15 @@ export default defineComponent({
             {
               label: this.chartData.label,
               data: this.chartData.data,
-              backgroundColor: colors,
-              borderColor: colors,
-              borderWidth: 0.5,
+              backgroundColor: Array.from(colors),
+              borderColor: Array.from(colors),
+              borderWidth: 1,
               pointStyle: "circle",
               spanGaps: true,
               pointRadius: 2,
               pointHitRadius: 100000,
               pointHoverRadius: 2,
+              barPercentage: 0.6,
             },
           ],
         },
@@ -90,7 +109,7 @@ export default defineComponent({
             yAxes: [
               {
                 gridLines: {
-                  lineWidth: 0.3,
+                  lineWidth: 1,
                 },
                 ticks: {
                   fontFamily: "Cutive Mono",
