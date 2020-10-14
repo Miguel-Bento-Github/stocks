@@ -1,7 +1,7 @@
 <template>
   <div class="loader">
-    <div />
-    <div />
+    <div class="loader-inner" />
+    <div class="loader-inner delayed" />
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .loader {
   margin-top: 4rem;
   display: inline-block;
@@ -21,30 +21,30 @@ export default defineComponent({
   width: 80px;
   height: 80px;
 }
-.loader div {
+
+.loader-inner {
   position: absolute;
-  border: 4px solid #ccc;
-  opacity: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  border: 4px solid $light;
   border-radius: 50%;
   animation: loader 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
-.loader div:nth-child(2) {
+
+.delayed {
   animation-delay: -0.5s;
 }
 
 @keyframes loader {
   0% {
-    top: 36px;
-    left: 36px;
-    width: 0;
-    height: 0;
+    transform: scale(0);
     opacity: 1;
   }
   100% {
-    top: 0px;
-    left: 0px;
-    width: 72px;
-    height: 72px;
+    transform: scale(1);
     opacity: 0;
   }
 }
