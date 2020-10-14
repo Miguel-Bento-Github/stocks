@@ -8,6 +8,7 @@
 import Chart from "chart.js";
 import { ChartData } from "@/types/main";
 import { defineComponent } from "vue";
+import colorList from "@/util/colorList";
 
 export default defineComponent({
   name: "Graph",
@@ -52,22 +53,12 @@ export default defineComponent({
        * {@link https://vuejs.org/v2/guide/components-edge-cases.html#Accessing-Child-Component-Instances-amp-Child-Elements}
        */
       const context: CanvasRenderingContext2D = this.$refs.chart.getContext("2d");
-      const colors: Set<string> = new Set(["rgba(82, 72, 156, 0.2)"]);
+      const colors: Set<string> = new Set(["rgba(82, 72, 156, 0.3)"]);
 
       /**
        * Will fill the colors array with any random colour from the list
        */
       if (this.chartData.type !== "line") {
-        const colorList = [
-          "rgba(182, 203, 158, 0.2)",
-          "rgba(247, 80, 38, 0.2)",
-          "rgba(55, 61, 32, 0.2)",
-          "rgba(82, 72, 156, 0.2)",
-          "rgba(162, 215, 41, 0.2)",
-          "rgba(250, 178, 234, 0.2)",
-          "rgba(223, 239, 202, 0.2)",
-          "rgba(61, 81, 140, 0.2)",
-        ];
         colors.clear();
         for (let i = 0; i < this.chartData.data.length; i++) {
           colors.add(colorList[Math.floor(Math.random() * colorList.length)]);
@@ -84,7 +75,7 @@ export default defineComponent({
               data: this.chartData.data,
               backgroundColor: Array.from(colors),
               borderColor: Array.from(colors),
-              borderWidth: 1,
+              borderWidth: 2,
               pointStyle: "circle",
               spanGaps: true,
               pointRadius: 2,
@@ -128,7 +119,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss">
 .price {
   display: block;
 }
@@ -136,7 +127,7 @@ export default defineComponent({
 .img {
   margin: 3rem;
   border-radius: 50%;
-  box-shadow: 3px 3px 12px #090916, -3px -3px 6px #25255a;
+  box-shadow: 3px 2px 6px $light, -3px -3px 6px $dark;
 }
 
 .chart {
