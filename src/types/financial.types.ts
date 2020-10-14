@@ -131,7 +131,7 @@ export interface Financials {
     yearToDatePriceReturnDaily: number | null;
   };
   series: {
-    Annual: {
+    annual: {
       cashRatio: Annual[];
       currentRatio: Annual[];
       ebitPerShare: Annual[];
