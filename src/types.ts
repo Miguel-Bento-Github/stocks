@@ -32,7 +32,7 @@ export interface Company {
 }
 
 export interface CompanyState {
-  showMenu: boolean;
+  attribute: string;
   symbol: string;
   data: null | LiveStock;
   company: null | Company;
