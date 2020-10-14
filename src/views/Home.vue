@@ -1,31 +1,29 @@
 <template>
   <main>
-    <section>
-      <h2>Live data</h2>
-
-      <form class="container" @submit.prevent>
-        <input v-model="ticker" type="text" placeholder="input company ticker..." />
+    <section class="welcome">
+      <h2 class="form-title">Advanced Stocks</h2>
+      <img class="logo" src="@/assets/lucky.png" alt="logo" />
+      <form class="form-container" @submit.prevent>
+        <input v-model="ticker" class="input" type="text" placeholder="input ticker here..." />
         <button class="button button-subscribe" @click="subscribe()">Connect</button>
         <button class="button button-unsubscribe" @click="unsubscribe()">Disconnect</button>
       </form>
     </section>
 
-    <section v-if="showStock" class="stock">
-      <router-link :to="stock.s.toLowerCase()" class="router-link">
+    <section v-if="showStock" class="company-container">
+      <router-link :to="stock.s.toLowerCase()" class="router-link ticker">
         {{ stock.s }}
       </router-link>
-      <div>{{ stock.p.toFixed(4) }}</div>
+      <div class="stock">{{ stock.p.toFixed(2) }}</div>
+      <Graph v-if="showStock" :chart-data="chartData" />
     </section>
 
     <div v-if="isLoading">
       <Loader />
     </div>
-
     <p v-if="infoMessage">
       {{ infoMessage }}
     </p>
-
-    <Graph v-if="showStock" :chart-data="chartData" />
   </main>
 </template>
 
@@ -34,7 +32,17 @@ import { defineComponent } from "vue";
 import Loader from "@/components/Loader.vue";
 import Graph from "@/components/Graph.vue";
 import store from "../store";
-import { ChartData, LiveStock } from "../types";
+import { ChartData, LiveStock } from "@/types/main";
+
+interface State {
+  showStock: boolean;
+  connected: boolean;
+  socket: WebSocket | null;
+  ticker: string;
+  currentTicker: string;
+  infoMessage: string;
+  isLoading: boolean;
+}
 
 export default defineComponent({
   name: "Home",
@@ -58,14 +66,12 @@ export default defineComponent({
       return store.state.stock;
     },
     chartData(): ChartData {
-      const data: ChartData = {
+      return {
         labels: store.getters.time,
         label: this.currentTicker,
         data: store.getters.price,
         type: "line",
       };
-
-      return data;
     },
   },
   /**
@@ -155,23 +161,26 @@ export default defineComponent({
     },
   },
 });
-
-interface State {
-  showStock: boolean;
-  connected: boolean;
-  socket: WebSocket | null;
-  ticker: string;
-  currentTicker: string;
-  infoMessage: string;
-  isLoading: boolean;
-}
 </script>
 
 <style lang="scss" scoped>
-input {
+.welcome {
+  background: linear-gradient($dark 50%, $white 50%);
+}
+
+.logo {
+  background: $white;
+  border-radius: 50%;
+  margin-top: 2rem;
+  width: 250px;
+  padding: 2rem;
+  box-shadow: 3px 2px 6px $light, -3px -3px 6px $dark;
+}
+
+.input {
   border-radius: 4px;
   border: none;
-  box-shadow: 1px -1px 2px $white, -1px 1px 2px $black;
+  box-shadow: 1px 1px 3px $light, -1px -1px 3px $dark;
   outline: thin;
   padding: 2px 4px;
 
@@ -185,8 +194,14 @@ input {
   }
 }
 
-.container {
-  margin-top: 2rem;
+.form {
+  &-container {
+    margin-top: 2rem;
+  }
+
+  &-title {
+    color: $white;
+  }
 }
 
 .button {
@@ -212,8 +227,15 @@ input {
   }
 }
 
-.stock {
+.company-container {
   margin-top: 5rem;
+}
+
+.stock {
   font-size: 5rem;
+}
+
+.ticker {
+  @extend .stock;
 }
 </style>

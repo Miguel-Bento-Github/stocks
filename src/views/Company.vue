@@ -1,6 +1,6 @@
 <template>
   <div v-if="canRender">
-    <Menu @attribute-selected="selectAttribute" :attributes="attributes" />
+    <Menu :attributes="attributes" @attribute-selected="selectAttribute" />
     <section class="data">
       <header class="company-container">
         <a :aria-label="company.name" class="router-link company-link" target="_blank" rel="noopener" :href="company.weburl">
@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
-import store from "@/store";
-import Graph from "@/components/Graph.vue";
-import Menu from "@/components/Menu.vue";
-import { CompanyState, ChartData } from "../types";
-import normaliseCasing from "@/util/normaliseCasing";
+import store from "../store";
+import Graph from "../components/Graph.vue";
+import Menu from "../components/Menu.vue";
+import { LiveStock, Company, ChartData } from "../types/main";
+import { Financials, Annual } from "../types/financial.types";
+import normaliseCasing from "../util/normaliseCasing";
 
 export default {
   name: "Company",
@@ -100,10 +101,13 @@ export default {
         throw new Error(error);
       }
     },
-    selectAttribute(attribute: string) {
+    selectAttribute(attribute: string): void {
       this.attribute = attribute;
     },
     advancedChartData(statistic: string): ChartData | null {
+      const statistics: Annual[] | null = this.financials.series.annual[statistic] || null;
+      if (!statistics) return null;
+
       const chartDataSchema: ChartData = {
         label: statistic,
         type: "line",
@@ -111,11 +115,7 @@ export default {
         data: [],
       };
 
-      const statistics: [{ period: string; v: number }] | null = this.financials.series.annual[statistic] || null;
-
-      if (!statistics) return null;
-
-      statistics.forEach((att: { period: string; v: number }): void => {
+      statistics.forEach((att: Annual): void => {
         chartDataSchema.labels.unshift(att.period);
         chartDataSchema.data.unshift(att.v);
       });
@@ -125,6 +125,14 @@ export default {
     normaliseCasing,
   },
 };
+
+export interface CompanyState {
+  attribute: string;
+  symbol: string;
+  data: null | LiveStock;
+  company: null | Company;
+  financials: null | Financials;
+}
 </script>
 
 <style lang="scss" scoped>
@@ -148,6 +156,6 @@ export default {
   padding: 2rem;
   margin: 3rem;
   border-radius: 50%;
-  box-shadow: 3px 3px 12px #ccc, -3px -3px 6px $dark;
+  box-shadow: 3px 3px 6px $light, -3px -3px 6px $dark;
 }
 </style>

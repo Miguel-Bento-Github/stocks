@@ -1,14 +1,12 @@
 <template>
-  <transition name="fade">
-    <div class="chart">
-      <canvas ref="chart" />
-    </div>
-  </transition>
+  <div class="chart">
+    <canvas ref="chart" />
+  </div>
 </template>
 
 <script lang="ts">
 import Chart from "chart.js";
-import { ChartData } from "../types";
+import { ChartData } from "@/types/main";
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -125,15 +123,5 @@ export default defineComponent({
 .chart {
   margin: 2rem auto;
   width: 70vw;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
