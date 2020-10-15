@@ -28,12 +28,18 @@ export default {};
 }
 
 .nav {
+  z-index: 1;
   top: 0;
   width: 100%;
   position: fixed;
   background: $dark;
-  padding: 1rem 2rem 1rem;
+  padding: 0 2rem;
   filter: drop-shadow(0 2px 4px $dark);
+  height: 48px;
+
+  .router-link {
+    top: 1rem;
+  }
 }
 
 .router-link {
@@ -54,7 +60,7 @@ export default {};
   }
 
   &:hover::before {
-    top: 100%;
+    top: 90%;
   }
 
   &::after {
@@ -69,7 +75,7 @@ export default {};
   }
 
   &:hover::after {
-    height: 100%;
+    height: 90%;
   }
 }
 </style>
