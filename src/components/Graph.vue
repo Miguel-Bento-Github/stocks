@@ -103,7 +103,7 @@ export default defineComponent({
                   display: false,
                 },
                 ticks: {
-                  fontFamily: "Cutive Mono",
+                  fontFamily: "Lato, Avenir, Arial, sans-serif",
                 },
               },
             ],
@@ -113,7 +113,7 @@ export default defineComponent({
                   lineWidth: 1,
                 },
                 ticks: {
-                  fontFamily: "Cutive Mono",
+                  fontFamily: "Lato, Avenir, Arial, sans-serif",
                 },
               },
             ],
