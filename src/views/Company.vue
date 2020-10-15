@@ -7,7 +7,7 @@
           <span>{{ company.name }}</span>
         </h3>
         <a :aria-label="company.name" target="_blank" rel="noopener" :href="company.weburl">
-          <img v-if="company.logo" class="img" :src="company.logo" />
+          <img v-if="company.logo" class="img" :src="company.logo" alt="company.name" />
         </a>
         <p :class="{ 'current-price': !company.logo }">
           Current price: {{ currentPrice || data.c.toFixed(2) }} {{ company.currency }}

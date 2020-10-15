@@ -23,7 +23,7 @@
         {{ normaliseCasing(attribute) }}
       </button>
     </nav>
-    <button :class="{ 'menu-selector-hide': showMenu }" class="menu-selector" @click="focusMenu(!showMenu)"></button>
+    <a :class="{ 'menu-selector-hide': showMenu }" class="menu-selector" @click="focusMenu(!showMenu)"></a>
   </aside>
 </template>
 

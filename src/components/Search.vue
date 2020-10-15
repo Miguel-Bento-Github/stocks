@@ -1,6 +1,7 @@
 <template>
   <form class="form-container" @submit.prevent="ticker = ''">
-    <input v-model="ticker" class="input" type="text" placeholder="eg: AMD..." />
+    <label for="ticker"> Ticker </label>
+    <input name="ticker" id="ticker" v-model="ticker" class="input" type="text" placeholder="eg: AMD..." />
     <button class="button button-subscribe" @click="$emit('subscribe', ticker)">Connect</button>
     <button class="button button-unsubscribe" @click="$emit('unsubscribe')">Disconnect</button>
   </form>
@@ -53,22 +54,22 @@ export default defineComponent({
   transition: all 150ms ease-in-out;
 
   &-subscribe {
-    $color: #3c5f35;
-    color: $color;
+    $color: #def5d9;
+    background: $color;
+    color: $dark;
 
     &:hover {
-      background: $color;
-      color: $white;
+      background: lighten($color, 5%);
     }
   }
 
   &-unsubscribe {
-    $color: #aa1818;
-    color: $color;
+    $color: #9b4a4a;
+    background: $color;
+    color: $white;
 
     &:hover {
-      background: $color;
-      color: $white;
+      background: darken($color, 10%);
     }
   }
 }
