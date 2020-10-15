@@ -25,7 +25,7 @@ export default defineComponent({
   bottom: 0;
   padding: 2rem;
   background: $white;
-  box-shadow: 3px 2px 6px $light, -3px -3px 6px $dark;
+  box-shadow: -3px -3px 6px $light;
 }
 
 .input {
@@ -47,26 +47,28 @@ export default defineComponent({
 }
 
 .button {
-  color: $white;
+  background: $white;
   margin-left: 16px;
   padding: 4px 1rem;
   transition: all 150ms ease-in-out;
 
   &-subscribe {
-    $color: #6aad55;
-    background: $color;
+    $color: #3c5f35;
+    color: $color;
 
     &:hover {
-      background: saturate($color, 20%);
+      background: $color;
+      color: $white;
     }
   }
 
   &-unsubscribe {
-    $color: #4ba479;
-    background: $color;
+    $color: #aa1818;
+    color: $color;
 
     &:hover {
-      background: desaturate($color, 20%);
+      background: $color;
+      color: $white;
     }
   }
 }
