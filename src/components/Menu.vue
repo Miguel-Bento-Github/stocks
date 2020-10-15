@@ -116,10 +116,10 @@ export default defineComponent({
   all: unset;
   position: fixed;
   top: 0;
-  right: 15px;
-  height: 20px;
-  width: 30px;
-  padding: 1rem;
+  right: 0;
+  height: 2rem;
+  width: 1rem;
+  padding: 1rem 2rem;
   cursor: pointer;
 
   &::before {

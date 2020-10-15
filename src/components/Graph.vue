@@ -144,5 +144,9 @@ export default defineComponent({
   margin: 2rem auto 0;
   width: 70vw;
   min-height: 40vh;
+
+  @media screen and (max-width: 620px) {
+    width: initial;
+  }
 }
 </style>

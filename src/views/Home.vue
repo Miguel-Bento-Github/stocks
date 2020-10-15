@@ -187,6 +187,10 @@ export default defineComponent({
 
 .company-container {
   margin-top: 5rem;
+
+  @media screen and (max-width: 620px) {
+    margin-top: 2rem;
+  }
 }
 
 .graph {

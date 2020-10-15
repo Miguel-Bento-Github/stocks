@@ -1,9 +1,7 @@
 <template>
   <main>
     <nav class="nav">
-      <div class="router-link-container">
-        <router-link class="router-link" to="/"> Home </router-link>
-      </div>
+      <router-link class="router-link" to="/"> Home </router-link>
     </nav>
     <router-view class="view" />
   </main>
@@ -28,17 +26,22 @@ export default {};
 }
 
 .nav {
+  display: flex;
+  align-items: center;
   top: 0;
   width: 100%;
   position: fixed;
   background: $dark;
-  padding: 0 2rem;
+  padding-left: 2rem;
   height: 48px;
   z-index: 1;
-  filter: drop-shadow(0 2px 4px $dark);
 
   .router-link {
     top: 1rem;
+  }
+
+  @media screen and (max-width: 620px) {
+    padding-left: 1rem;
   }
 }
 
@@ -48,6 +51,10 @@ export default {};
   text-decoration: none;
   position: relative;
   padding: 0.25rem 1rem;
+
+  &:visited {
+    background-color: $light;
+  }
 
   &::before {
     content: "";
