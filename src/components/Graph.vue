@@ -16,9 +16,10 @@ export default defineComponent({
     chartData: { required: true, type: Object as () => ChartData },
     realTime: { required: false, type: Boolean, default: true },
   },
-  data(): { chart: Chart | null } {
+  data(): { chart: Chart | null; updatedData: ChartData | null } {
     return {
       chart: null,
+      updatedData: null,
     };
   },
   watch: {
@@ -37,8 +38,16 @@ export default defineComponent({
   mounted() {
     this.drawChart();
   },
+  /**
+   * This will update chart data and datasets when the prop changes
+   */
   updated() {
-    // TODO Update charts
+    const { label, labels, data, type } = this.chartData;
+    this.chart.config.type = type;
+    this.chart.config.labels = labels;
+    this.chart.config.data.datasets[0].label = label;
+    this.chart.config.data.datasets[0].data = data;
+    this.chart.update();
   },
   methods: {
     /**
