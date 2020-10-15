@@ -145,6 +145,7 @@ export default defineComponent({
      *  - Show info message and delete it after a second and a half
      */
     unsubscribe(): void {
+      this.currentTicker = "";
       this.showStock = false;
       if (!this.socket) return;
 
