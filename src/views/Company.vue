@@ -9,7 +9,9 @@
         <a :aria-label="company.name" target="_blank" rel="noopener" :href="company.weburl">
           <img v-if="company.logo" class="img" :src="company.logo" />
         </a>
-        <p>Current price: {{ currentPrice || data.c.toFixed(2) }} {{ company.currency }}</p>
+        <p :class="{ 'current-price': !company.logo }">
+          Current price: {{ currentPrice || data.c.toFixed(2) }} {{ company.currency }}
+        </p>
       </header>
       <Graph v-if="!attribute && canRender" :chart-data="basicChartData" />
     </section>
@@ -163,8 +165,8 @@ export interface CompanyState {
   margin: 0 auto;
 }
 
-.price {
-  display: block;
+.current-price {
+  padding-top: 2rem;
 }
 
 .img {
