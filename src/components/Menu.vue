@@ -59,6 +59,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .navigator {
+  position: relative;
+  z-index: 1;
   background: $dark;
   color: $ivory;
   text-align: left;
@@ -72,7 +74,6 @@ export default defineComponent({
   top: 48px;
   right: 0;
   height: 100%;
-  z-index: 1;
   filter: drop-shadow(0 2px 4px $dark);
   transform: translateX(150%);
   transition: transform 250ms ease;
