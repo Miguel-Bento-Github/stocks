@@ -78,6 +78,8 @@ export default defineComponent({
   mounted(): void {
     if (store.state.stock.p) {
       this.showStock = true;
+    } else {
+      this.infoMessage = "To get started please insert a company ticker bellow.";
     }
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <form class="form-container" @submit.prevent="ticker = ''">
-    <input v-model="ticker" class="input" type="text" placeholder="input ticker here..." />
+    <input v-model="ticker" class="input" type="text" placeholder="eg: AMD..." />
     <button class="button button-subscribe" @click="$emit('subscribe', ticker)">Connect</button>
     <button class="button button-unsubscribe" @click="$emit('unsubscribe')">Disconnect</button>
   </form>
