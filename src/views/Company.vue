@@ -20,12 +20,16 @@
       </div>
     </section>
   </div>
+  <div v-else class="loader-container">
+    <Loader />
+  </div>
 </template>
 
 <script lang="ts">
 import store from "../store";
 import Graph from "../components/Graph.vue";
 import Menu from "../components/Menu.vue";
+import Loader from "../components/Loader.vue";
 import { LiveStock, Company, ChartData } from "../types/main";
 import { Financials, Annual } from "../types/financial.types";
 import normaliseCasing from "../util/normaliseCasing";
@@ -36,6 +40,7 @@ export default {
   components: {
     Graph,
     Menu,
+    Loader,
   },
   data(): CompanyState {
     return {
@@ -154,6 +159,10 @@ export interface CompanyState {
 </script>
 
 <style lang="scss" scoped>
+.loader-container {
+  transform: translateY(5rem);
+}
+
 .data {
   height: calc(100vh - 48px);
   display: flex;
