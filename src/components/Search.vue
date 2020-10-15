@@ -50,22 +50,23 @@ export default defineComponent({
   color: $white;
   margin-left: 16px;
   padding: 4px 1rem;
+  transition: all 150ms ease-in-out;
 
   &-subscribe {
-    $color: #4ba479;
-    background: $color;
-
-    &:hover {
-      background: desaturate($color, 20%);
-    }
-  }
-
-  &-unsubscribe {
     $color: #78c461;
     background: $color;
 
     &:hover {
       background: saturate($color, 20%);
+    }
+  }
+
+  &-unsubscribe {
+    $color: #4ba479;
+    background: $color;
+
+    &:hover {
+      background: desaturate($color, 20%);
     }
   }
 }
