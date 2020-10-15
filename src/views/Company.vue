@@ -101,6 +101,9 @@ export default {
     this.findCompany();
     this.findFinancials();
   },
+  updated(): void {
+    if (this.canRender) document.title = this.company.name;
+  },
   methods: {
     async findStock(): Promise<void> {
       try {

@@ -10,7 +10,7 @@
         {{ stock.s }}
       </router-link>
       <div class="stock">{{ stock.p.toFixed(2) }}</div>
-      <Graph class="graph" v-if="showStock" :chart-data="chartData" :live="true" />
+      <Graph v-if="showStock" class="graph" :chart-data="chartData" :live="true" />
     </section>
 
     <div v-if="isLoading">
