@@ -141,7 +141,7 @@ export default defineComponent({
 }
 
 .chart {
-  margin: 5rem auto 0;
+  margin: 2rem auto 0;
   width: 70vw;
   min-height: 40vh;
 }

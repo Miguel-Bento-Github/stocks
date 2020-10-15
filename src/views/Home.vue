@@ -10,7 +10,7 @@
         {{ stock.s }}
       </router-link>
       <div class="stock">{{ stock.p.toFixed(2) }}</div>
-      <Graph v-if="showStock" :chart-data="chartData" :live="true" />
+      <Graph class="graph" v-if="showStock" :chart-data="chartData" :live="true" />
     </section>
 
     <div v-if="isLoading">
@@ -180,6 +180,11 @@ export default defineComponent({
 
 .company-container {
   margin-top: 5rem;
+}
+
+.graph {
+  min-height: 20vh;
+  margin-bottom: 15rem;
 }
 
 .stock {

@@ -60,11 +60,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .navigator {
   position: relative;
-  z-index: 1;
   background: $dark;
   color: $ivory;
   text-align: left;
   padding: 1rem;
+
+  @media screen and (max-width: 800px) {
+    z-index: 1;
+  }
 }
 
 .navigator-list {
