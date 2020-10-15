@@ -95,6 +95,7 @@ export default defineComponent({
           ],
         },
         options: {
+          maintainAspectRatio: false,
           scales: {
             xAxes: [
               {
@@ -117,7 +118,7 @@ export default defineComponent({
               },
             ],
           },
-          aspectRatio: window.matchMedia("(max-width: 450px)").matches ? 1 : 3,
+          aspectRatio: window.matchMedia("(max-width: 960px)").matches ? 1 : 2,
           legend: {
             display: false,
           },
@@ -140,7 +141,8 @@ export default defineComponent({
 }
 
 .chart {
-  margin: 2rem auto;
+  margin: 5rem auto 0;
   width: 70vw;
+  min-height: 40vh;
 }
 </style>
