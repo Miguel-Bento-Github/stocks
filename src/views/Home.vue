@@ -1,7 +1,7 @@
 <template>
   <main>
     <section class="welcome">
-      <h2 class="app-title">Advanced Stocks</h2>
+      <h2 class="app-title">MoneyWell</h2>
       <img class="logo" src="@/assets/lucky.png" alt="logo" />
     </section>
     <Search @subscribe="subscribe" @unsubscribe="unsubscribe" />
