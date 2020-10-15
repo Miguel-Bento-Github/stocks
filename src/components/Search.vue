@@ -21,16 +21,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .form-container {
-  width: 100%;
-  position: fixed;
-  bottom: 0;
   padding: 2rem;
-  background: $dark;
-  box-shadow: -3px -3px 6px $light;
 }
 
 .ticker-label {
-  color: $light;
+  color: $dark;
 }
 
 .input,
@@ -44,15 +39,18 @@ export default defineComponent({
   border: 0;
   background: rgba($light, 0.2);
   outline: thin;
-  color: $light;
   box-shadow: inset 1px -1px 1px $positive, inset -1px 1px 1px $positive;
 
   &:hover {
-    box-shadow: inset 2px -2px 2px $positive, inset -2px 2px 2px $positive;
+    box-shadow: inset 1px -1px 2px $positive, inset -1px 1px 2px $positive;
   }
 
   &::placeholder {
     color: darken($white, 40%);
+  }
+
+  &:focus {
+    background: $white;
   }
 
   @media screen and (max-width: 500px) {
@@ -67,30 +65,32 @@ export default defineComponent({
   color: $white;
 
   &-subscribe {
+    $shadow-color: lighten($positive, 10%);
     color: $positive;
-    box-shadow: 1px -1px 2px $light, -2px 2px 4px $positive;
+    box-shadow: 1px -1px 2px $shadow-color, -1px 1px 2px $shadow-color;
 
     &:hover {
-      box-shadow: 1px -1px 2px $positive, -1px 1px 2px $positive;
+      box-shadow: 1px -1px 2px $light, -2px 2px 4px $shadow-color;
     }
 
     &:active {
       transform: translateY(1px);
-      box-shadow: 0 -1px 2px $positive, -1px 0 2px $positive;
+      box-shadow: 0 -1px 2px $shadow-color, -1px 0 2px $shadow-color;
     }
   }
 
   &-unsubscribe {
+    $shadow-color: lighten($negative, 10%);
     color: $negative;
-    box-shadow: 1px -1px 2px $light, -2px 2px 4px $negative;
+    box-shadow: 1px -1px 2px $shadow-color, -1px 1px 2px $shadow-color;
 
     &:hover {
-      box-shadow: 1px -1px 2px $negative, -1px 1px 2px $negative;
+      box-shadow: 1px -1px 2px $light, -2px 2px 4px $negative;
     }
 
     &:active {
       transform: translateY(1px);
-      box-shadow: 0 -1px 2px $negative, -1px 0 2px $negative;
+      box-shadow: 0 -1px 2px $shadow-color, -1px 0 2px $shadow-color;
     }
   }
 }

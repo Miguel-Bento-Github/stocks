@@ -5,7 +5,6 @@
       <img class="logo" src="@/assets/lucky.png" alt="logo" />
     </section>
     <Search @subscribe="subscribe" @unsubscribe="unsubscribe" />
-
     <section v-if="showStock" class="company-container">
       <router-link :to="stock.s.toLowerCase()" class="router-link ticker">
         {{ stock.s }}
@@ -13,10 +12,6 @@
       <div class="stock">{{ stock.p.toFixed(2) }}</div>
       <Graph class="graph" :chart-data="chartData" :live="true" />
     </section>
-    <div v-else>
-      <!-- <Graph  /> -->
-    </div>
-
     <section v-if="currentTicker && !showStock" class="company-container">
       <router-link :to="currentTicker.toLowerCase()" class="router-link ticker">
         {{ currentTicker }}
@@ -26,9 +21,11 @@
     <div v-if="isLoading">
       <Loader />
     </div>
+
     <p v-if="infoMessage">
       {{ infoMessage }}
     </p>
+    <Graph v-if="!showStock && !currentTicker" :chart-data="dummyChartData" />
   </main>
 </template>
 
@@ -80,6 +77,14 @@ export default defineComponent({
         type: "line",
       };
     },
+    dummyChartData(): ChartData {
+      return {
+        labels: ["Elon Musk", "Warren Buffet", "Jerome Kerviel"],
+        label: "",
+        data: [93.7, 80, -6.3],
+        type: "bar",
+      };
+    },
   },
   /**
    * Show stock if connection hasn't been lost.
@@ -89,7 +94,7 @@ export default defineComponent({
     if (store.state.stock.p) {
       this.showStock = true;
     } else {
-      this.infoMessage = "To get started please insert a company ticker bellow.";
+      this.infoMessage = "To get started please insert a company ticker above.";
     }
   },
   methods: {
