@@ -15,7 +15,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .loader {
-  margin-top: 4rem;
   display: inline-block;
   position: relative;
   width: 80px;
