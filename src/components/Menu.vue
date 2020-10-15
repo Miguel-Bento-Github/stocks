@@ -64,7 +64,7 @@ export default defineComponent({
   background: $dark;
   color: $ivory;
   text-align: left;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .navigator-list {

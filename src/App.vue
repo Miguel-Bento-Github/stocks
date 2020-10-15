@@ -1,9 +1,9 @@
 <template>
   <main>
     <nav class="nav">
-      <transition name="underline">
+      <div class="router-link-container">
         <router-link class="router-link" to="/"> Home </router-link>
-      </transition>
+      </div>
     </nav>
     <router-view class="view" />
   </main>
@@ -28,7 +28,6 @@ export default {};
 }
 
 .nav {
-  z-index: 1;
   top: 0;
   width: 100%;
   position: fixed;
@@ -46,7 +45,7 @@ export default {};
   color: $light;
   text-decoration: none;
   position: relative;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 1rem;
 
   &::before {
     content: "";
@@ -56,11 +55,11 @@ export default {};
     left: 0;
     height: 2px;
     background-color: $light;
-    transition: all 250ms ease-in-out 50ms;
+    transition: all 250ms;
   }
 
   &:hover::before {
-    top: 90%;
+    top: 100%;
   }
 
   &::after {
@@ -71,11 +70,11 @@ export default {};
     top: 0;
     width: 2px;
     background-color: $light;
-    transition: all 250ms ease-in-out 50ms;
+    transition: all 250ms;
   }
 
   &:hover::after {
-    height: 90%;
+    height: 100%;
   }
 }
 </style>
