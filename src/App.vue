@@ -27,7 +27,7 @@ export default {};
 
 .nav {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   top: 0;
   width: 100%;
   position: fixed;
@@ -35,6 +35,7 @@ export default {};
   padding-left: 2rem;
   height: 48px;
   z-index: 1;
+  filter: drop-shadow(0 2px 4px $dark);
 
   .router-link {
     top: 1rem;

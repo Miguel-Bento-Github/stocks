@@ -3,9 +3,9 @@
     <Menu :attributes="attributes" @attribute-selected="selectAttribute" />
     <section class="data">
       <header class="company-container">
-        <a :aria-label="company.name" class="router-link company-link" target="_blank" rel="noopener" :href="company.weburl">
+        <h3 :aria-label="company.name" class="company-link" target="_blank" rel="noopener" :href="company.weburl">
           <span>{{ company.name }}</span>
-        </a>
+        </h3>
         <a :aria-label="company.name" target="_blank" rel="noopener" :href="company.weburl">
           <img v-if="company.logo" class="img" :src="company.logo" />
         </a>
@@ -167,6 +167,7 @@ export interface CompanyState {
 }
 
 .company-link {
+  color: $light;
   display: block;
   width: max-content;
   margin: 0 auto;

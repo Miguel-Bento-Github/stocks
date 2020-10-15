@@ -117,7 +117,7 @@ export default defineComponent({
   position: fixed;
   top: 0;
   right: 0;
-  height: 2rem;
+  height: 2px; // router-link bar height
   width: 1rem;
   padding: 1rem 2rem;
   cursor: pointer;
