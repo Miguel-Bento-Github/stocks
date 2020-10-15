@@ -29,6 +29,11 @@ export default defineComponent({
   box-shadow: -3px -3px 6px $light;
 }
 
+.input,
+.button {
+  transition: all 150ms ease-in-out;
+}
+
 .input {
   border-radius: 1rem;
   padding: 4px 1rem;
@@ -36,6 +41,11 @@ export default defineComponent({
   background: rgba($light, 0.2);
   outline: thin;
   color: $dark;
+  box-shadow: inset 1px -1px 1px $positive, inset -1px 1px 1px $positive;
+
+  &:hover {
+    box-shadow: inset 2px -2px 2px $positive, inset -2px 2px 2px $positive;
+  }
 
   &::placeholder {
     color: darken($white, 40%);
@@ -48,28 +58,25 @@ export default defineComponent({
 }
 
 .button {
-  background: $white;
   margin-left: 16px;
   padding: 4px 1rem;
-  transition: all 150ms ease-in-out;
+  color: $white;
 
   &-subscribe {
-    $color: #def5d9;
-    background: $color;
-    color: $dark;
+    box-shadow: 1px -1px 2px $light, -2px 2px 4px $positive;
+    color: darken($positive, 15%);
 
     &:hover {
-      background: lighten($color, 5%);
+      box-shadow: 1px -1px 2px $positive, -2px 2px 4px $positive, inset 1px -1px 1px $positive, inset -1px 1px 2px $positive;
     }
   }
 
   &-unsubscribe {
-    $color: #9b4a4a;
-    background: $color;
-    color: $white;
+    box-shadow: 1px -1px 2px $light, -2px 2px 4px $negative;
+    color: darken($negative, 15%);
 
     &:hover {
-      background: darken($color, 10%);
+      box-shadow: 1px -1px 2px $negative, -2px 2px 4px $negative, inset 1px -1px 1px $negative, inset -1px 1px 2px $negative;
     }
   }
 }
