@@ -13,12 +13,12 @@
           Current price: {{ currentPrice || data.c.toFixed(2) }} {{ company.currency }}
         </p>
       </header>
-      <Graph v-if="!attribute && canRender" :chart-data="basicChartData" />
+      <Graph v-if="!attribute && canRender" class="company-chart" :chart-data="basicChartData" />
+      <div v-if="attribute && canRender" class="company-chart">
+        <h2>{{ normaliseCasing(attribute) }}</h2>
+        <Graph :chart-data="advancedChartData" />
+      </div>
     </section>
-    <div v-if="attribute && canRender">
-      <h2>{{ normaliseCasing(attribute) }}</h2>
-      <Graph :chart-data="advancedChartData" />
-    </div>
   </div>
 </template>
 
@@ -154,15 +154,26 @@ export interface CompanyState {
 </script>
 
 <style lang="scss" scoped>
+.data {
+  height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+
 .company-container {
   background: linear-gradient($dark 50%, $white 50%);
   padding: 1rem;
+  justify-self: flex-start;
 }
 
 .company-link {
   display: block;
   width: max-content;
   margin: 0 auto;
+}
+
+.company-chart {
+  margin: auto;
 }
 
 .current-price {
