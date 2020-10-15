@@ -1,6 +1,6 @@
 <template>
   <form class="form-container" @submit.prevent="ticker = ''">
-    <label for="ticker"> Ticker </label>
+    <label class="ticker-label" for="ticker"> Ticker </label>
     <input id="ticker" v-model="ticker" name="ticker" class="input" type="text" placeholder="eg: AMD..." />
     <button class="button button-subscribe" @click="$emit('subscribe', ticker)">Connect</button>
     <button class="button button-unsubscribe" @click="$emit('unsubscribe')">Disconnect</button>
@@ -27,6 +27,10 @@ export default defineComponent({
   padding: 2rem;
   background: $dark;
   box-shadow: -3px -3px 6px $light;
+}
+
+.ticker-label {
+  color: $light;
 }
 
 .input,

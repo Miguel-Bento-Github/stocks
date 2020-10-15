@@ -5,6 +5,7 @@
       <img class="logo" src="@/assets/lucky.png" alt="logo" />
     </section>
     <Search @subscribe="subscribe" @unsubscribe="unsubscribe" />
+
     <section v-if="showStock" class="company-container">
       <router-link :to="stock.s.toLowerCase()" class="router-link ticker">
         {{ stock.s }}
@@ -12,6 +13,10 @@
       <div class="stock">{{ stock.p.toFixed(2) }}</div>
       <Graph class="graph" :chart-data="chartData" :live="true" />
     </section>
+    <div v-else>
+      <!-- <Graph  /> -->
+    </div>
+
     <section v-if="currentTicker && !showStock" class="company-container">
       <router-link :to="currentTicker.toLowerCase()" class="router-link ticker">
         {{ currentTicker }}
