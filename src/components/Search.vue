@@ -20,19 +20,21 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .form-container {
+  width: 100%;
   position: fixed;
   bottom: 0;
-  background: $white;
-  width: 100%;
   padding: 2rem;
+  background: $white;
+  box-shadow: 3px 2px 6px $light, -3px -3px 6px $dark;
 }
 
 .input {
   border-radius: 1rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  box-shadow: 3px 2px 6px $light, -3px -3px 6px $dark;
+  padding: 4px 1rem;
+  border: 0;
+  background: rgba($light, 0.2);
   outline: thin;
+  color: $dark;
 
   &::placeholder {
     color: darken($white, 40%);
@@ -47,6 +49,7 @@ export default defineComponent({
 .button {
   color: $white;
   margin-left: 16px;
+  padding: 4px 1rem;
 
   &-subscribe {
     $color: #4ba479;
