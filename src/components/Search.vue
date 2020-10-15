@@ -1,7 +1,7 @@
 <template>
   <form class="form-container" @submit.prevent="ticker = ''">
     <label for="ticker"> Ticker </label>
-    <input name="ticker" id="ticker" v-model="ticker" class="input" type="text" placeholder="eg: AMD..." />
+    <input id="ticker" v-model="ticker" name="ticker" class="input" type="text" placeholder="eg: AMD..." />
     <button class="button button-subscribe" @click="$emit('subscribe', ticker)">Connect</button>
     <button class="button button-unsubscribe" @click="$emit('unsubscribe')">Disconnect</button>
   </form>
