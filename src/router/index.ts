@@ -6,13 +6,29 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    meta: { title: "MoneyWell" },
+    meta: {
+      title: "MoneyWell",
+      metaTags: [
+        {
+          name: "description",
+          content: "The home page of our app.",
+        },
+      ],
+    },
     component: (): Component => import("@/views/Home.vue"),
   },
   {
     path: "/:id",
     name: "company",
-    meta: { title: "Company overview" },
+    meta: {
+      title: "Company overview",
+      metaTags: [
+        {
+          name: "description",
+          content: "Here you can find all sorts of statistics about each individual company",
+        },
+      ],
+    },
     component: (): Component => import("@/views/Company.vue"),
   },
   { path: "/:pathMatch(.*)*", name: "not-found", component: Home },
