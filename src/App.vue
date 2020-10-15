@@ -46,7 +46,7 @@ export default {};
   color: $light;
   text-decoration: none;
   position: relative;
-  padding: 0.25rem 1rem;
+  padding: 0.25rem 0.5rem;
 
   &::before {
     content: "";
