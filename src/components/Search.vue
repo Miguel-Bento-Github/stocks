@@ -25,7 +25,7 @@ export default defineComponent({
   position: fixed;
   bottom: 0;
   padding: 2rem;
-  background: $white;
+  background: $dark;
   box-shadow: -3px -3px 6px $light;
 }
 
@@ -40,7 +40,7 @@ export default defineComponent({
   border: 0;
   background: rgba($light, 0.2);
   outline: thin;
-  color: $dark;
+  color: $light;
   box-shadow: inset 1px -1px 1px $positive, inset -1px 1px 1px $positive;
 
   &:hover {
@@ -63,20 +63,30 @@ export default defineComponent({
   color: $white;
 
   &-subscribe {
+    color: $positive;
     box-shadow: 1px -1px 2px $light, -2px 2px 4px $positive;
-    color: darken($positive, 15%);
 
     &:hover {
-      box-shadow: 1px -1px 2px $positive, -2px 2px 4px $positive, inset 1px -1px 1px $positive, inset -1px 1px 2px $positive;
+      box-shadow: 1px -1px 2px $positive, -1px 1px 2px $positive;
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 -1px 2px $positive, -1px 0 2px $positive;
     }
   }
 
   &-unsubscribe {
+    color: $negative;
     box-shadow: 1px -1px 2px $light, -2px 2px 4px $negative;
-    color: darken($negative, 15%);
 
     &:hover {
-      box-shadow: 1px -1px 2px $negative, -2px 2px 4px $negative, inset 1px -1px 1px $negative, inset -1px 1px 2px $negative;
+      box-shadow: 1px -1px 2px $negative, -1px 1px 2px $negative;
+    }
+
+    &:active {
+      transform: translateY(1px);
+      box-shadow: 0 -1px 2px $negative, -1px 0 2px $negative;
     }
   }
 }
