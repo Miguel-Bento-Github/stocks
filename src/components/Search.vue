@@ -53,7 +53,7 @@ export default defineComponent({
   transition: all 150ms ease-in-out;
 
   &-subscribe {
-    $color: #78c461;
+    $color: #6aad55;
     background: $color;
 
     &:hover {

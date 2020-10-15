@@ -33,8 +33,9 @@ export default {};
   position: fixed;
   background: $dark;
   padding: 0 2rem;
-  filter: drop-shadow(0 2px 4px $dark);
   height: 48px;
+  z-index: 1;
+  filter: drop-shadow(0 2px 4px $dark);
 
   .router-link {
     top: 1rem;
@@ -42,6 +43,7 @@ export default {};
 }
 
 .router-link {
+  z-index: 0;
   color: $light;
   text-decoration: none;
   position: relative;
