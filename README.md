@@ -1,6 +1,6 @@
-# stock-app
+# MoneyWell
 
-## Project setup
+### Project setup
 
 ```
 npm i
