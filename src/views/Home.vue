@@ -25,7 +25,6 @@
     <p v-if="infoMessage">
       {{ infoMessage }}
     </p>
-    <Graph v-if="!showStock && !currentTicker" :chart-data="dummyChartData" />
   </main>
 </template>
 
@@ -75,14 +74,6 @@ export default defineComponent({
         label: this.currentTicker,
         data: store.getters.price,
         type: "line",
-      };
-    },
-    dummyChartData(): ChartData {
-      return {
-        labels: ["Elon Musk", "Warren Buffet", "Jerome Kerviel"],
-        label: "",
-        data: [93.7, 80, -6.3],
-        type: "bar",
       };
     },
   },
